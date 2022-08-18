@@ -7,7 +7,9 @@ import {
 import 'dotenv/config';
 
 import { Product } from './schemas/Product';
+import { ProductImage } from './schemas/ProductImage';
 import { User } from './schemas/User';
+import { insertSeedData } from './seed-data/index';
 
 const databaseURL = process.env.DATABASE_URL;
 
@@ -37,12 +39,17 @@ export default withAuth(
     db: {
       adapter: 'mongoose',
       url: databaseURL,
-      // TODO: Add data seeding here
+      async onConnect(keystone) {
+        if (process.argv.includes('--seed-data')) {
+          await insertSeedData(keystone);
+        }
+      },
     },
     lists: createSchema({
       // Schema items go in here
       User,
       Product,
+      ProductImage,
     }),
     ui: {
       // TODO: change this for roles
