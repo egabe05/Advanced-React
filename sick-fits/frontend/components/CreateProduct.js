@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import DisplayError from './ErrorMessage';
+import { allProductsQuery } from './Products';
 
 const createProductMutation = gql`
   mutation CreateProductMutation(
@@ -38,7 +39,14 @@ export default function CreateProduct() {
 
   const [createProduct, { loading, error, data }] = useMutation(
     createProductMutation,
-    { variables: inputs }
+    {
+      variables: inputs,
+      refetchQueries: [
+        {
+          query: allProductsQuery,
+        },
+      ],
+    }
   );
 
   return (
