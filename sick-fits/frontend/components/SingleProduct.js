@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
 import DisplayError from './ErrorMessage';
+import { SingleProductQuery } from '../graphql_operations/SingleProductQuery.graphql';
 
 const ProductStyles = styled.div`
   display: grid;
@@ -18,27 +18,8 @@ const ProductStyles = styled.div`
   }
 `;
 
-const singleProductQuery = gql`
-  query Product($where: ProductWhereUniqueInput!) {
-    Product(where: $where) {
-      id
-      name
-      description
-      photo {
-        id
-        image {
-          publicUrlTransformed
-        }
-        altText
-      }
-      status
-      price
-    }
-  }
-`;
-
 export default function SingleProduct({ id }) {
-  const { data, loading, error } = useQuery(singleProductQuery, {
+  const { data, loading, error } = useQuery(SingleProductQuery, {
     variables: { where: { id } },
   });
 

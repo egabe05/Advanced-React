@@ -1,0 +1,16 @@
+query SingleProductQuery($where: ProductWhereUniqueInput!) {
+    Product(where: $where) {
+      id
+      name
+      description
+      photo {
+        id
+        image {
+          publicUrlTransformed
+        }
+        altText
+      }
+      status
+      price
+    }
+  }
