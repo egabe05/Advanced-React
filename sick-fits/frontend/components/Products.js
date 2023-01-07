@@ -1,25 +1,8 @@
 import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
 import styled from 'styled-components';
 import Product from './Product';
-
-export const allProductsQuery = gql`
-  query AllProductsQuery {
-    allProducts {
-      id
-      name
-      price
-      description
-      photo {
-        id
-        image {
-          publicUrlTransformed
-        }
-        altText
-      }
-    }
-  }
-`;
+import { AllProductsQuery } from '../graphql_operations/AllProductsQuery.graphql';
+import { perPage } from '../config';
 
 const ProductsListStyles = styled.div`
   display: grid;
@@ -27,8 +10,10 @@ const ProductsListStyles = styled.div`
   grid-gap: 60px;
 `;
 
-export default function Products() {
-  const { data, error, loading } = useQuery(allProductsQuery);
+export default function Products({ page }) {
+  const { data, error, loading } = useQuery(AllProductsQuery, {
+    variables: { first: perPage, skip: (page - 1) * perPage },
+  });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   return (

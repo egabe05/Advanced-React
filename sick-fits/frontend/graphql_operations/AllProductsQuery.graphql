@@ -1,0 +1,15 @@
+query AllProductsQuery ($first: Int $skip: Int) {
+    allProducts (first:$first skip:$skip) {
+        id
+        name
+        price
+        description
+        photo {
+        id
+        image {
+            publicUrlTransformed
+        }
+        altText
+        }
+    }
+}
