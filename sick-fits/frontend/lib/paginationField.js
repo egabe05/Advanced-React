@@ -4,9 +4,6 @@ export default function paginationField() {
   return {
     keyArgs: false,
     read(existing = [], { args, cache }) {
-      console.log(`existing values in the read(): `);
-      console.log(existing);
-
       const { skip, first } = args;
 
       const data = cache.readQuery({ query: PaginatedProductsQuery });
@@ -16,9 +13,6 @@ export default function paginationField() {
 
       // Check cache for existing products
       const products = existing.slice(skip, skip + first).filter((x) => x);
-
-      console.log(`existing filtered products in the read(): `);
-      console.log(products);
 
       // When on last page and products exist, use cache
       if (
@@ -43,18 +37,12 @@ export default function paginationField() {
       return false;
     },
     merge(existing = [], incoming, { args }) {
-      const { skip, first } = args;
-
-      console.log(`existing in the merge(): `);
-      console.log(existing);
+      const { skip } = args;
 
       const merged = existing ? existing.slice(0) : [];
 
-      for (let i = skip; i < skip + incoming.length; ++i) {
-        console.log(`pre merged value: `, merged);
-        console.log(`merging at position: ${i}`);
+      for (let i = skip; i < skip + incoming.length; i += 1) {
         merged[i] = incoming[i - skip];
-        console.log(`post merged value: `, merged);
       }
 
       return merged;
