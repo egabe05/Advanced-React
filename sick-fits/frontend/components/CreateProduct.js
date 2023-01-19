@@ -4,7 +4,7 @@ import Router from 'next/router';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import DisplayError from './ErrorMessage';
-import { allProductsQuery } from './Products';
+import { AllProductsQuery } from '../graphql_operations/AllProductsQuery.graphql';
 
 const createProductMutation = gql`
   mutation CreateProductMutation(
@@ -44,7 +44,7 @@ export default function CreateProduct() {
       variables: inputs,
       refetchQueries: [
         {
-          query: allProductsQuery,
+          query: AllProductsQuery,
         },
       ],
     }
