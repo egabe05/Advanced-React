@@ -1,0 +1,6 @@
+mutation RequestResetMutation ($email: String!) {
+  sendUserPasswordResetLink(email: $email) {
+    code
+    message
+  }
+}
