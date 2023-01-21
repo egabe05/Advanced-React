@@ -40,8 +40,9 @@ export default function SignIn() {
 
   return (
     <Form method="POST" onSubmit={async (e) => handleSubmit(e)}>
+      <h2>Sign into your account</h2>
+      <Error error={error} />
       <fieldset>
-        <Error error={error} />
         <label htmlFor="email">
           Email
           <input
