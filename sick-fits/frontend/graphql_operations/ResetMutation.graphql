@@ -1,0 +1,6 @@
+mutation ResetMutation ($email: String!, $password: String!, $token: String!) {
+  redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {
+    code
+    message
+  }
+}
